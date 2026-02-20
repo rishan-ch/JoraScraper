@@ -56,7 +56,16 @@ namespace JoraScraper.Modules.Scraper.Service
                 await using var page = await browser.NewPageAsync();
 
                 await page.SetViewportAsync(new ViewPortOptions { Width = 1920, Height = 1080 });
-                await page.SetUserAgentAsync("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+                await page.SetUserAgentAsync("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36");
+                await page.SetExtraHttpHeadersAsync(new Dictionary<string, string>
+                {
+                    { "Accept-Language", "en-US,en;q=0.9" },
+                    { "Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8" },
+                    { "Sec-Fetch-Site", "none" },
+                    { "Sec-Fetch-Mode", "navigate" },
+                    { "Sec-Fetch-User", "?1" },
+                    { "Sec-Fetch-Dest", "document" }
+                });
 
                 int pageNum = 1;
                 int totalPages = 1;
