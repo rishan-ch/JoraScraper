@@ -1,0 +1,41 @@
+## .NET Specific
+bin/
+obj/
+publish/
+
+## Puppeteer / Browser Management
+# If you download Chromium locally in your project, ignore those binaries
+.local-chromium/
+chrome-win/
+chrome-linux/
+Debug/
+Release/
+
+## Environment & Secrets
+# NEVER commit your real appsettings or environment variables
+.env
+.env.*
+!appsettings.json
+appsettings.Development.json
+appsettings.*.json
+*.user
+*.userosscache
+*.sln.docstates
+
+## OS Specific
+.DS_Store
+Thumbs.db
+
+## IDE Specific (Visual Studio / VS Code)
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+*.userprefs
+.idea/
+*.swp
+*.bak
+
+## Docker
+.dockerignore
