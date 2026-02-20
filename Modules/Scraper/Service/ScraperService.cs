@@ -253,16 +253,19 @@ namespace JoraScraper.Modules.Scraper.Service
 
         public async Task SaveJobsToExcel(List<JobInfo> jobs, string fileName = "JobsFromJora.xlsx")
         {
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
+        
             var exportDir = Path.Combine(Directory.GetCurrentDirectory(), "DataExports");
             if (!Directory.Exists(exportDir))
                 Directory.CreateDirectory(exportDir);
-
+        
             var filePath = Path.Combine(exportDir, fileName);
-
+        
             if (File.Exists(filePath))
                 File.Delete(filePath);
-
-            using var package = new ExcelPackage();
+        
+            // This is where it was crashing before because the license wasn't set correctly
+            using var package = new ExcelPackage(); 
             var worksheet = package.Workbook.Worksheets.Add("Jobs");
 
             worksheet.Cells[1, 1].Value = "JobPostId";
