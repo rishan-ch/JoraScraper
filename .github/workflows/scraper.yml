@@ -1,0 +1,43 @@
+name: Jora Scraper Execution
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Automatically runs every day at 9:00 AM UTC
+  workflow_dispatch:    # Allows you to click a manual "Run" button in GitHub Actions UI
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' # Matches your project version
+
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run Scraper CLI
+        # IMPORTANT: Replace 'YourProject.csproj' with your actual filename
+        # The '--' tells dotnet run to pass the following flags to YOUR code
+        run: dotnet run --project JoraScraper.csproj -- --run-scraper
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+          # If you have a database or API keys, add them here:
+          # MY_CONN_STRING: ${{ secrets.MY_CONN_STRING }}
+
+      - name: Upload Scraped Excel
+        uses: actions/upload-artifact@v4
+        with:
+          name: JoraJobs-Export
+          path: DataExports/JobsFromJora.xlsx
+          retention-days: 30 # Files stay available for download for 30 days
