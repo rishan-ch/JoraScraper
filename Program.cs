@@ -31,7 +31,7 @@ if (args.Contains("--run-scraper"))
 var builder = WebApplication.CreateBuilder(args);
 
 // EPPlus License
-OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+OfficeOpenXml.ExcelPackage.License.SetNonCommercialPersonal("Your Name");
 
 builder.Services.AddCors(options =>
 {
